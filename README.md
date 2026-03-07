@@ -1,27 +1,47 @@
-# Bitcoin Market Analyst Portfolio Project
+# Bitcoin Decision Intelligence Platform
 
-Dieses Repository ist als Portfolio-Projekt fuer Bewerbungen im Bereich Business Analysis, Data Analysis und Analytics aufgebaut. Es zeigt einen vollstaendigen Analyse-Workflow fuer Bitcoin-Marktdaten: Datenbeschaffung, Feature Engineering, Modelltraining, Evaluierung und Management-taugliche Ergebnisaufbereitung.
+Dieses Repository ist als starkes Portfolio-Projekt fuer Bewerbungen im Bereich Business Analysis, Data Analysis und Analytics aufgebaut. Es zeigt nicht nur eine Preisprognose, sondern eine vollstaendige Decision-Intelligence-Pipeline fuer Bitcoin: Datenbeschaffung, Feature Engineering, Modelltraining, Signal-Generierung, Risiko-Scoring, Backtesting und Management-taugliche Ergebnisaufbereitung.
 
 ## Projektziel
 
-Ziel ist es, historische Bitcoin-Daten zu analysieren und ein einfaches, nachvollziehbares Modell zur Vorhersage der naechsten Tagesbewegung aufzubauen. Im Vordergrund stehen nicht "perfekte" Prognosen, sondern:
+Ziel ist es, historische Bitcoin-Daten so auszuwerten, dass daraus taegliche Entscheidungsunterstuetzung fuer Marktbeobachtung und Trading entsteht. Im Vordergrund stehen nicht "perfekte" Prognosen, sondern:
 
 - strukturierte Analyse eines realen Marktdatensatzes
 - saubere und reproduzierbare Datenpipeline
 - nachvollziehbare KPIs und Interpretation
+- konkrete Handlungssignale statt nur Modell-Outputs
+- Backtesting und Benchmarking gegen Buy-and-Hold
 - GitHub-taugliche Projektdokumentation fuer Bewerbungen
 
 ## Business-Frage
 
-**Kann man aus historischen Marktindikatoren ein Modell bauen, das die Richtung der Bitcoin-Preisbewegung am naechsten Handelstag besser als Zufall abschaetzt?**
+**Kann man aus historischen Marktindikatoren ein System bauen, das taeglich Chancen, Risiken und sinnvolle Bitcoin-Handlungsoptionen strukturiert bewertet?**
 
 ## Projektumfang
 
 - Abruf historischer `BTC-USD`-Marktdaten via `yfinance`
-- Berechnung technischer und statistischer Features
-- Training eines Klassifikationsmodells fuer Up/Down-Prognosen
+- Berechnung technischer, trendbezogener und risiko-orientierter Features
+- Training eines Klassifikationsmodells mit Wahrscheinlichkeits-Output
 - Zeitbasierter Train/Test-Split
-- Export von Metriken, Feature Importances und Markdown-Report
+- Uebersetzung der Modellwahrscheinlichkeit in `BUY`, `HOLD`, `REDUCE_RISK`
+- Marktregime-Erkennung wie `bull_trend`, `bear_trend` und `high_volatility`
+- Risiko-Score und Position-Sizing als Decision Layer
+- Backtesting der Signale mit Benchmark gegen Buy-and-Hold
+- Export von Reports, Kennzahlen und Management Summary
+
+## Die 9 Mehrwert-Bausteine
+
+Dieses Projekt wurde bewusst um neun Punkte erweitert, damit es fachlich deutlich mehr hergibt als ein simples Modell:
+
+1. Modellwahrscheinlichkeiten statt nur binarer Vorhersage
+2. konkrete Trading-Signale (`BUY`, `HOLD`, `REDUCE_RISK`)
+3. Konfidenz-Score pro Entscheidung
+4. Marktregime-Erkennung
+5. Risiko-Score fuer das aktuelle Setup
+6. Position-Sizing als Handlungsempfehlung
+7. Backtesting der Strategie
+8. Benchmark gegen Buy-and-Hold
+9. Executive Summary mit Business- und Trading-Perspektive
 
 ## Verzeichnisstruktur
 
@@ -42,7 +62,8 @@ Ziel ist es, historische Bitcoin-Daten zu analysieren und ein einfaches, nachvol
 │       ├── features.py
 │       ├── model.py
 │       ├── pipeline.py
-│       └── reporting.py
+│       ├── reporting.py
+│       └── strategy.py
 ├── tests/
 └── README.md
 ```
@@ -74,30 +95,24 @@ Nach einem Lauf werden folgende Artefakte erzeugt:
 - `data/raw/btc_usd.csv`: Rohdaten
 - `data/processed/btc_features.csv`: modellierte Features
 - `models/random_forest_direction.pkl`: trainiertes Modell
-- `reports/generated/metrics.json`: Kennzahlen
+- `reports/generated/metrics.json`: Modell-Kennzahlen
+- `reports/generated/backtest_metrics.json`: Strategie- und Benchmark-Kennzahlen
 - `reports/generated/feature_importance.csv`: wichtigste Einflussfaktoren
-- `reports/generated/executive_summary.md`: Management Summary
+- `reports/generated/predictions.csv`: Signale, Risiko, Konfidenz und Equity Curves
+- `reports/generated/executive_summary.md`: Management- und Trading Summary
 
 ## Beispielergebnis
 
 Ein Beispiel-Lauf mit echten `BTC-USD`-Daten wurde am **7. Maerz 2026** ausgefuehrt.
 
-- Accuracy: `0.516`
-- Precision: `0.513`
-- Recall: `0.549`
-- F1 Score: `0.530`
-- Train Rows: `2217`
-- Test Rows: `740`
+Die genauen Zahlen werden bei jedem Lauf neu erzeugt. Im Repository liegen Beispiel-Outputs in `reports/generated/`, damit Recruiter und Interviewer direkt sehen koennen, wie das System Ergebnisse dokumentiert.
 
-Die wichtigsten Features in diesem Lauf waren:
+Typische Output-Fragen, die dieses Projekt beantwortet:
 
-- `return_1d`
-- `sma_7_ratio`
-- `sma_30_ratio`
-- `rsi_14`
-- `return_7d`
-
-Die erzeugten Beispiel-Outputs liegen in `reports/generated/` und koennen direkt im Repository eingesehen werden.
+- Wie hoch ist die Wahrscheinlichkeit fuer einen positiven naechsten Tag?
+- Befindet sich Bitcoin in einem Bullen-, Baeren- oder Hochrisiko-Regime?
+- Ist die aktuelle Situation eher fuer `BUY`, `HOLD` oder `REDUCE_RISK` geeignet?
+- Wie haette sich diese Signallogik historisch gegen Buy-and-Hold geschlagen?
 
 ## Warum dieses Projekt fuer Bewerbungen sinnvoll ist
 
@@ -105,21 +120,22 @@ Dieses Projekt zeigt, dass du:
 
 - ein Analyseproblem fachlich strukturieren kannst
 - Datenquellen in eine reproduzierbare Pipeline ueberfuehrst
-- KPIs definierst und Ergebnisse sauber interpretierst
+- KPIs fuer Modell, Risiko und Strategie definierst
 - technische Ergebnisse in Business-Sprache uebersetzt
+- aus Daten konkrete Handlungsoptionen ableitest
 - ein komplettes GitHub-Repository mit sinnvoller Dokumentation aufsetzt
 
 ## Weiterer Ausbau
 
 Moegliche naechste Schritte fuer Version 2:
 
-- Benchmark gegen Buy-and-Hold oder naive Baselines
-- Backtesting fuer einfache Handelsregeln
 - Dashboard in Power BI oder Streamlit
-- erweiterte Feature-Sets mit Makro- oder On-Chain-Daten
+- erweiterte Feature-Sets mit Makro-, ETF-, Sentiment- oder On-Chain-Daten
+- taegliche automatische Report-Generierung
+- Walk-Forward-Validation statt nur eines Splits
+- Alerting fuer neue Hochrisiko- oder High-Conviction-Signale
 - automatisierte Reports per GitHub Actions
 
 ## Hinweis
 
-Das Modell ist ein Demonstrationsprojekt fuer Analytics- und Business-Portfolio-Zwecke. Es ist **keine** Finanzberatung.
-
+Das Projekt ist als Research-, Analytics- und Decision-Support-System gedacht. Es ist **keine** Finanzberatung und kein fertig produktives Handelssystem.

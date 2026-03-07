@@ -38,6 +38,7 @@ def train_direction_model(features: pd.DataFrame, test_size: float = 0.25) -> Tr
     model.fit(train[FEATURE_COLUMNS], train["target"])
 
     predicted = model.predict(test[FEATURE_COLUMNS])
+    probability_up = model.predict_proba(test[FEATURE_COLUMNS])[:, 1]
     metrics = {
         "train_rows": int(len(train)),
         "test_rows": int(len(test)),
@@ -55,11 +56,23 @@ def train_direction_model(features: pd.DataFrame, test_size: float = 0.25) -> Tr
         }
     ).sort_values("importance", ascending=False)
 
-    predictions = test[["Date", "Close", "target"]].copy()
+    predictions = test[
+        [
+            "Date",
+            "Close",
+            "target",
+            "next_return",
+            "volatility_30d",
+            "trend_strength_30d",
+            "sma_30_ratio",
+            "intraday_range",
+            "distance_to_52w_high",
+        ]
+    ].copy()
     predictions["prediction"] = predicted
+    predictions["prob_up"] = probability_up
     return TrainResult(model=model, metrics=metrics, feature_importance=importance, predictions=predictions)
 
 
 def save_model(model: RandomForestClassifier, output_path) -> None:
     joblib.dump(model, output_path)
-

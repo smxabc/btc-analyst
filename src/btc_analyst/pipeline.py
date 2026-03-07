@@ -8,11 +8,13 @@ from btc_analyst.data import load_from_csv, load_market_data, save_dataframe
 from btc_analyst.features import build_features
 from btc_analyst.model import save_model, train_direction_model
 from btc_analyst.reporting import (
+    write_backtest_metrics,
     write_executive_summary,
     write_feature_importance,
     write_metrics,
     write_predictions,
 )
+from btc_analyst.strategy import backtest_strategy
 
 
 @dataclass
@@ -34,14 +36,24 @@ def run_pipeline(project_root: Path, args: PipelineArgs) -> dict:
 
     features = build_features(raw_data)
     result = train_direction_model(features, test_size=args.test_size)
+    strategy_result = backtest_strategy(result.predictions)
 
     save_dataframe(raw_data, paths.data_raw / "btc_usd.csv")
     save_dataframe(features, paths.data_processed / "btc_features.csv")
     save_model(result.model, paths.models / "random_forest_direction.pkl")
     write_metrics(result.metrics, paths.reports / "metrics.json")
+    write_backtest_metrics(strategy_result.backtest_metrics, paths.reports / "backtest_metrics.json")
     write_feature_importance(result.feature_importance, paths.reports / "feature_importance.csv")
-    write_predictions(result.predictions, paths.reports / "predictions.csv")
-    write_executive_summary(result.metrics, result.feature_importance, paths.reports / "executive_summary.md")
+    write_predictions(strategy_result.enriched_predictions, paths.reports / "predictions.csv")
+    write_executive_summary(
+        result.metrics,
+        strategy_result.backtest_metrics,
+        result.feature_importance,
+        paths.reports / "executive_summary.md",
+    )
 
-    return result.metrics
-
+    combined_metrics = {
+        "model_metrics": result.metrics,
+        "strategy_metrics": strategy_result.backtest_metrics,
+    }
+    return combined_metrics

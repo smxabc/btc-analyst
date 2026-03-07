@@ -1,0 +1,17 @@
+{
+  "strategy_total_return": -0.0592315876855265,
+  "benchmark_total_return": -0.05773298410150074,
+  "alpha_vs_benchmark": -0.0014986035840257594,
+  "strategy_max_drawdown": -0.19538344526816975,
+  "benchmark_max_drawdown": -0.4973881729854679,
+  "strategy_sharpe": -0.1881619720360687,
+  "benchmark_sharpe": 0.18282181858173846,
+  "signal_distribution": {
+    "HOLD": 462,
+    "REDUCE_RISK": 250,
+    "BUY": 13
+  },
+  "avg_risk_score": 68.71172413793103,
+  "avg_confidence_score": 0.08053569173753987,
+  "buy_signal_precision": 0.38461538461538464
+}

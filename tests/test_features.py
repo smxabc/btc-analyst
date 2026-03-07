@@ -4,7 +4,7 @@ from btc_analyst.features import FEATURE_COLUMNS, build_features
 
 
 def test_build_features_returns_expected_columns() -> None:
-    rows = 60
+    rows = 420
     dataset = pd.DataFrame(
         {
             "Date": pd.date_range("2024-01-01", periods=rows, freq="D"),
@@ -21,5 +21,5 @@ def test_build_features_returns_expected_columns() -> None:
 
     for column in FEATURE_COLUMNS + ["target"]:
         assert column in features.columns
+    assert "next_return" in features.columns
     assert not features.empty
-
