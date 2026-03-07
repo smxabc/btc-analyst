@@ -1,6 +1,6 @@
 # Bitcoin Decision Intelligence Platform
 
-Dieses Repository ist als starkes Portfolio-Projekt fuer Bewerbungen im Bereich Business Analysis, Data Analysis und Analytics aufgebaut. Es zeigt nicht nur eine Preisprognose, sondern eine vollstaendige Decision-Intelligence-Pipeline fuer Bitcoin: Datenbeschaffung, Feature Engineering, Modelltraining, Signal-Generierung, Risiko-Scoring, Backtesting und Management-taugliche Ergebnisaufbereitung.
+Dieses Repository dokumentiert ein unabhaengiges Research- und Analytics-Projekt rund um Bitcoin. Es zeigt nicht nur eine Preisprognose, sondern eine vollstaendige Decision-Intelligence-Pipeline fuer Bitcoin: Datenbeschaffung, Feature Engineering, Modelltraining, Signal-Generierung, Risiko-Scoring, Backtesting und strukturierte Ergebnisaufbereitung.
 
 ## Projektziel
 
@@ -11,7 +11,7 @@ Ziel ist es, historische Bitcoin-Daten so auszuwerten, dass daraus taegliche Ent
 - nachvollziehbare KPIs und Interpretation
 - konkrete Handlungssignale statt nur Modell-Outputs
 - Backtesting und Benchmarking gegen Buy-and-Hold
-- GitHub-taugliche Projektdokumentation fuer Bewerbungen
+- transparente und nachvollziehbare Dokumentation der Ergebnisse
 
 ## Business-Frage
 
@@ -105,7 +105,7 @@ Nach einem Lauf werden folgende Artefakte erzeugt:
 
 Ein Beispiel-Lauf mit echten `BTC-USD`-Daten wurde am **7. Maerz 2026** ausgefuehrt.
 
-Die genauen Zahlen werden bei jedem Lauf neu erzeugt. Im Repository liegen Beispiel-Outputs in `reports/generated/`, damit Recruiter und Interviewer direkt sehen koennen, wie das System Ergebnisse dokumentiert.
+Die genauen Zahlen werden bei jedem Lauf neu erzeugt. Im Repository liegen Beispiel-Outputs in `reports/generated/`, damit Ergebnisse, Kennzahlen und Signale direkt nachvollziehbar bleiben.
 
 Typische Output-Fragen, die dieses Projekt beantwortet:
 
@@ -114,16 +114,16 @@ Typische Output-Fragen, die dieses Projekt beantwortet:
 - Ist die aktuelle Situation eher fuer `BUY`, `HOLD` oder `REDUCE_RISK` geeignet?
 - Wie haette sich diese Signallogik historisch gegen Buy-and-Hold geschlagen?
 
-## Warum dieses Projekt fuer Bewerbungen sinnvoll ist
+## Warum dieses Projekt relevant ist
 
-Dieses Projekt zeigt, dass du:
+Dieses Projekt verbindet mehrere Perspektiven in einem zusammenhaengenden System:
 
-- ein Analyseproblem fachlich strukturieren kannst
-- Datenquellen in eine reproduzierbare Pipeline ueberfuehrst
-- KPIs fuer Modell, Risiko und Strategie definierst
-- technische Ergebnisse in Business-Sprache uebersetzt
-- aus Daten konkrete Handlungsoptionen ableitest
-- ein komplettes GitHub-Repository mit sinnvoller Dokumentation aufsetzt
+- Datenbeschaffung und Feature Engineering
+- Modellierung mit Wahrscheinlichkeiten statt reiner Klassenlabels
+- Risiko- und Regimebewertung
+- Signal-Generierung fuer Handlungsunterstuetzung
+- Backtesting und Benchmarking
+- strukturierte Aufbereitung der Ergebnisse fuer Analyse und Diskussion
 
 ## Weiterer Ausbau
 
