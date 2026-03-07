@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+
+data/raw/
+data/processed/
+models/
+reports/generated/*
+!reports/generated/.gitkeep
+!reports/generated/*.md
+!reports/generated/*.json
+!reports/generated/*.csv
