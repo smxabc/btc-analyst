@@ -36,21 +36,60 @@ def compute_signal(row: pd.Series) -> str:
     regime = row["market_regime"]
     risk_score = row["risk_score"]
 
-    if probability >= 0.58 and risk_score <= 60 and regime in {"bull_trend", "range_bound"}:
+    if probability >= 0.56 and risk_score <= 65 and regime in {"bull_trend", "range_bound"}:
         return "BUY"
-    if probability <= 0.42 or risk_score >= 75 or regime == "bear_trend":
+    if probability <= 0.44:
+        return "REDUCE_RISK"
+    if regime == "bear_trend" and (risk_score >= 70 or probability < 0.50):
+        return "REDUCE_RISK"
+    if risk_score >= 82 and probability < 0.56:
         return "REDUCE_RISK"
     return "HOLD"
 
 
+def compute_signal_reason(row: pd.Series) -> str:
+    probability = row["prob_up"]
+    regime = row["market_regime"]
+    risk_score = row["risk_score"]
+
+    if probability >= 0.56 and risk_score <= 65 and regime in {"bull_trend", "range_bound"}:
+        return "High upside probability with manageable risk."
+    if probability <= 0.44:
+        return "Low upside probability triggered a defensive stance."
+    if regime == "bear_trend" and (risk_score >= 70 or probability < 0.50):
+        return "Bear trend plus weak or risky setup."
+    if risk_score >= 82 and probability < 0.56:
+        return "Risk override blocked a long despite mixed probability."
+    return "Mixed setup without a strong directional edge."
+
+
+def compute_decision_score(row: pd.Series) -> float:
+    regime_bonus = {
+        "bull_trend": 6,
+        "range_bound": 1,
+        "bear_trend": -6,
+        "high_volatility": -4,
+    }
+    probability_component = (row["prob_up"] - 0.5) * 100
+    risk_component = -0.35 * max(row["risk_score"] - 50, 0)
+    confidence_component = row["confidence_score"] * 10
+    return round(
+        float(
+            probability_component
+            + risk_component
+            + confidence_component
+            + regime_bonus.get(row["market_regime"], 0)
+        ),
+        2,
+    )
+
+
 def compute_position_size(row: pd.Series) -> float:
     if row["signal"] == "BUY":
-        base_size = 1.0 if row["confidence_score"] >= 0.2 else 0.6
-        if row["risk_score"] > 55:
-            base_size *= 0.6
+        base_size = 1.0 if row["confidence_score"] >= 0.18 else 0.6
         return round(base_size, 2)
     if row["signal"] == "HOLD":
-        return 0.35
+        return 0.0
     return 0.0
 
 
@@ -60,6 +99,8 @@ def enrich_predictions(predictions: pd.DataFrame) -> pd.DataFrame:
     enriched["risk_score"] = enriched.apply(compute_risk_score, axis=1)
     enriched["confidence_score"] = (enriched["prob_up"] - 0.5).abs() * 2
     enriched["signal"] = enriched.apply(compute_signal, axis=1)
+    enriched["signal_reason"] = enriched.apply(compute_signal_reason, axis=1)
+    enriched["decision_score"] = enriched.apply(compute_decision_score, axis=1)
     enriched["position_size"] = enriched.apply(compute_position_size, axis=1)
     enriched["benchmark_position"] = 1.0
     enriched["strategy_return"] = enriched["position_size"] * enriched["next_return"]
@@ -100,6 +141,7 @@ def backtest_strategy(predictions: pd.DataFrame) -> StrategyResult:
         "signal_distribution": signal_counts,
         "avg_risk_score": float(enriched["risk_score"].mean()),
         "avg_confidence_score": float(enriched["confidence_score"].mean()),
+        "avg_decision_score": float(enriched["decision_score"].mean()),
         "buy_signal_precision": float(
             (
                 enriched.loc[enriched["signal"] == "BUY", "next_return"] > 0

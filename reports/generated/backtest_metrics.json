@@ -1,17 +1,18 @@
 {
-  "strategy_total_return": -0.0592315876855265,
-  "benchmark_total_return": -0.05773298410150074,
-  "alpha_vs_benchmark": -0.0014986035840257594,
-  "strategy_max_drawdown": -0.19538344526816975,
-  "benchmark_max_drawdown": -0.4973881729854679,
-  "strategy_sharpe": -0.1881619720360687,
-  "benchmark_sharpe": 0.18282181858173846,
+  "strategy_total_return": -0.006494551036311469,
+  "benchmark_total_return": -0.01862866794678142,
+  "alpha_vs_benchmark": 0.01213411691046995,
+  "strategy_max_drawdown": -0.13554562517332325,
+  "benchmark_max_drawdown": -0.497388172985468,
+  "strategy_sharpe": 0.010746621927698546,
+  "benchmark_sharpe": 0.22540942202783487,
   "signal_distribution": {
-    "HOLD": 462,
-    "REDUCE_RISK": 250,
-    "BUY": 13
+    "HOLD": 477,
+    "REDUCE_RISK": 202,
+    "BUY": 46
   },
-  "avg_risk_score": 68.71172413793103,
-  "avg_confidence_score": 0.08053569173753987,
-  "buy_signal_precision": 0.38461538461538464
+  "avg_risk_score": 68.75310344827587,
+  "avg_confidence_score": 0.08090582699446769,
+  "avg_decision_score": -3.817903448275862,
+  "buy_signal_precision": 0.5652173913043478
 }

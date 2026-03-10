@@ -23,6 +23,8 @@ def test_backtest_strategy_creates_decision_columns() -> None:
     result = backtest_strategy(predictions)
 
     assert "signal" in result.enriched_predictions.columns
+    assert "signal_reason" in result.enriched_predictions.columns
+    assert "decision_score" in result.enriched_predictions.columns
     assert "risk_score" in result.enriched_predictions.columns
     assert "strategy_equity_curve" in result.enriched_predictions.columns
     assert "strategy_total_return" in result.backtest_metrics
